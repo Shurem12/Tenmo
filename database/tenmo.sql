@@ -32,6 +32,13 @@ CREATE TABLE account (
 	CONSTRAINT PK_account PRIMARY KEY (account_id),
 	CONSTRAINT FK_account_tenmo_user FOREIGN KEY (user_id) REFERENCES tenmo_user (user_id)
 );
+CREATE table user_transfer(
+        transfer_id int not null,
+        user_id int not null,
 
+
+
+
+)
 
 COMMIT;

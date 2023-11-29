@@ -2,6 +2,7 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.exception.DaoException;
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -34,6 +35,33 @@ public class JdbcAccountDao implements AccountDao {
         return newAccount;
     }
 
+    @Override
+    public Account deleteAccount(int accountId) {
+        return null;
+    }
+
+    public  boolean deleteAccount(int userID, int  accountId){
+        boolean successFul=false;
+
+        String sql="delete \n" +
+                "from account\n" +
+                "where user_id=? and account_id=?;";
+
+        try {
+            jdbcTemplate.update(sql,userID,accountId);
+
+            successFul=true;
+
+        }catch(Exception ex){
+            throw new DaoException("Account was not deleted");
+
+        }
+        return successFul;
+
+    }
+
+
+
     public List<Account> listTransfers(int userId) {
         List<Account> accounts = new ArrayList<>();
         String sql = "SELECT * FROM account WHERE user_id = ?;";
@@ -50,6 +78,8 @@ public class JdbcAccountDao implements AccountDao {
 
         return accounts;
     }
+
+
 
     public  Account sendMoney ( int senderAccountId, int recipientAccountId, double amount){
         // TODO: verify sender account has enough money
@@ -78,27 +108,21 @@ public class JdbcAccountDao implements AccountDao {
         return null;
     }
 
-    public  boolean deleteAccount(int userID, int  accountId){
-        boolean successFul=false;
 
-        String sql="delete \n" +
+    public  Account retrieveDetails(int userId){
+        String sql="select*\n" +
                 "from account\n" +
-                "where user_id=? and account_id=?;";
+                "where user_id=?;\n";
 
         try {
-            jdbcTemplate.update(sql,userID,accountId);
-
-            successFul=true;
-
-        }catch(Exception ex){
-            throw new DaoException("Account was not deleted");
+            jdbcTemplate.queryForRowSet(sql,userId);
+        }catch (Exception ex){
+            throw new DaoException("Could not retrieveDetails");
 
         }
-        return successFul;
 
+        return null;
     }
-
-
 
 
 

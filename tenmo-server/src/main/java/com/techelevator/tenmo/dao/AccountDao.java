@@ -11,7 +11,7 @@ public interface AccountDao {
 
     List<Account> listTransfers(int userId);
 
-    Account sendMoney(int userId, double amount);
+    Account sendMoney( int senderAccountId, int recipientAccountId, double amount);
 
     Account retrieveDetails(int userId);
 }
