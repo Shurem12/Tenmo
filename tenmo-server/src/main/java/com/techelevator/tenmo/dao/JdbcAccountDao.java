@@ -78,11 +78,29 @@ public class JdbcAccountDao implements AccountDao {
         return null;
     }
 
-    public  Account retrieveDetails(int userId){
+    public  boolean deleteAccount(int userID, int  accountId){
+        boolean successFul=false;
 
+        String sql="delete \n" +
+                "from account\n" +
+                "where user_id=? and account_id=?;";
 
+        try {
+            jdbcTemplate.update(sql,userID,accountId);
+
+            successFul=true;
+
+        }catch(Exception ex){
+            throw new DaoException("Account was not deleted");
+
+        }
+        return successFul;
 
     }
+
+
+
+
 
     public Account mapRowToAccount(SqlRowSet result){
         Account account = new Account();
