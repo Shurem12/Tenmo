@@ -9,11 +9,11 @@ public interface AccountDao {
 
     boolean deleteAccount(int userID, int  accountId);
 
-
-
     List<Account> listTransfers(int userId);
 
     Account sendMoney( int senderAccountId, int recipientAccountId, double amount);
 
-    Account retrieveDetails(int userId);
+    Account getBalance(int userId);
+
+    Account grabDetails(int userId);
 }

@@ -110,7 +110,8 @@ public class JdbcAccountDao implements AccountDao {
     }
 
 
-    public  Account retrieveDetails(int userId){
+
+    public  Account getBalance(int userId){
         String sql="select*\n" +
                 "from account\n" +
                 "where user_id=?;\n";
@@ -128,6 +129,10 @@ public class JdbcAccountDao implements AccountDao {
         return null;
     }
 
+    @Override
+    public Account grabDetails(int userId) {
+        return null;
+    }
 
 
     public Account mapRowToAccount(SqlRowSet result){
