@@ -8,15 +8,21 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@PreAuthorize("isAuthenticated")
+@PreAuthorize("isAuthenticated()")
 public class AccountController {
     @Autowired
     private AccountDao accountDao;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/account", method = RequestMethod.POST)
-    public Account createAccount(@RequestParam int userId) {
+    @RequestMapping(path = "/account/create/{userId}", method = RequestMethod.POST)
+    public Account createAccount(@PathVariable int userId) {
+
         return accountDao.createAccount(userId);
+    }
+
+    @RequestMapping(path = "/account/balance/{userId}",method = RequestMethod.GET)
+    public Account getBalance(@PathVariable int userId){
+        return accountDao.retrieveDetails(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -7,7 +7,9 @@ import java.util.List;
 public interface AccountDao {
     Account createAccount(int userId);
 
-    Account deleteAccount(int accountId);
+    boolean deleteAccount(int userID, int  accountId);
+
+
 
     List<Account> listTransfers(int userId);
 

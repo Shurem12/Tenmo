@@ -17,14 +17,17 @@ public class JdbcAccountDao implements AccountDao {
     private JdbcTemplate jdbcTemplate;
 
     public Account createAccount(int userId) {
+        //TODO: check if user exists before creating account
+
         Account newAccount = null;
 
         String sql = "insert into account(user_id,balance)\n" +
                 "values (?,?) RETURNING account_id ;";
 
         try {
-            int accountId = jdbcTemplate.queryForObject(sql, int.class, userId);
+            int accountId = jdbcTemplate.queryForObject(sql, int.class, userId,1000);
             newAccount = new Account();
+            newAccount.setAccountId(accountId);
             newAccount.setUserId(userId);
             newAccount.setBalance(1000.000);
 
@@ -35,10 +38,7 @@ public class JdbcAccountDao implements AccountDao {
         return newAccount;
     }
 
-    @Override
-    public Account deleteAccount(int accountId) {
-        return null;
-    }
+
 
     public  boolean deleteAccount(int userID, int  accountId){
         boolean successFul=false;
@@ -59,6 +59,7 @@ public class JdbcAccountDao implements AccountDao {
         return successFul;
 
     }
+
 
 
 
@@ -113,9 +114,12 @@ public class JdbcAccountDao implements AccountDao {
         String sql="select*\n" +
                 "from account\n" +
                 "where user_id=?;\n";
-
+            //ToDo receive tranfer details based on tranfer_id. need table
         try {
-            jdbcTemplate.queryForRowSet(sql,userId);
+          SqlRowSet rowSet=  jdbcTemplate.queryForRowSet(sql,userId);
+            if (rowSet.next()){
+                return mapRowToAccount(rowSet);
+            }
         }catch (Exception ex){
             throw new DaoException("Could not retrieveDetails");
 
