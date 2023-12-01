@@ -16,20 +16,24 @@ public class JdbcAccountDao implements AccountDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Account getBalanceById(int accountId) {
+    public double getBalanceById(int accountId) {
+        double balance=0;
+
         String sql = "select*\n" +
                 "from account\n" +
                 "where account_id=?;\n";
-        //ToDo receive tranfer details based on tranfer_id. need table
+
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, accountId);
             if (rowSet.next()) {
-                return mapRowToAccount(rowSet);
+                Account account = mapRowToAccount(rowSet);
+                balance= account.getBalance();
             }
         } catch (Exception ex) {
             throw new DaoException("Could not retrieveDetails");
         }
-        return null;
+        return balance;
+
     }
 
     public Account createAccount(int userId) {

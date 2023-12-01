@@ -5,7 +5,7 @@ import com.techelevator.tenmo.model.Account;
 import java.util.List;
 
 public interface AccountDao {
-    Account getBalanceById(int accountId);
+    double getBalanceById(int accountId);
 
     Account createAccount(int userId);
 

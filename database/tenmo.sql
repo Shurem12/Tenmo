@@ -32,7 +32,7 @@ CREATE TABLE account (
 	CONSTRAINT PK_account PRIMARY KEY (account_id),
 	CONSTRAINT FK_account_tenmo_user FOREIGN KEY (user_id) REFERENCES tenmo_user (user_id)
 );
-
+CREATE TYPE status AS ENUM ('PENDING','APPROVED');
 CREATE table transfer(
         transfer_id serial primary key,
         sender_user_id int not null,
@@ -41,10 +41,10 @@ CREATE table transfer(
         recipient_account_id int not null,
         transfer_timestamp timestamp,
         amount_sent numeric,
-        transfer_status enum('PENDING','APPROVED'),
-        foreign key (sender_user_id) references tenmo_user(user_id)
+        transfer_status status not null,
+        foreign key (sender_user_id) references tenmo_user(user_id),
         foreign key (sender_account_id) references account(account_id),
-        foreign key (recipient_user_id) references tenmo_user(user_id)
+        foreign key (recipient_user_id) references tenmo_user(user_id),
         foreign key (recipient_account_id) references account(account_id),
         unique (transfer_id, sender_account_id, recipient_account_id)
 );

@@ -27,9 +27,9 @@ public class AccountController {
         accountDao.deleteAccount(userId, accountId);
     }
 
-    @RequestMapping(path = "/account/balance/{userId}", method = RequestMethod.GET)
-    public Account getBalance(@PathVariable int userId) {
-        return accountDao.getBalanceById(userId);
+    @RequestMapping(path = "/account/balance/{accountId}", method = RequestMethod.GET)
+    public double getBalance(@PathVariable int accountId) {
+        return accountDao.getBalanceById(accountId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

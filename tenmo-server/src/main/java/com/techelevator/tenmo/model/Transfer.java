@@ -8,7 +8,7 @@ public class Transfer {
     private int recipientAccountId;
     private int transferTimestamp;
     private int amountSent;
-    private int status;
+    private String  status;
 
     public int getTransferId() {
         return transferId;
