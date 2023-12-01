@@ -16,19 +16,19 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/account/create/{userId}", method = RequestMethod.POST)
     public Account createAccount(@PathVariable int userId) {
-
         return accountDao.createAccount(userId);
     }
 
-    @RequestMapping(path = "/account/balance/{userId}",method = RequestMethod.GET)
-    public Account getBalance(@PathVariable int userId){
-        return accountDao.getBalance(userId);
-    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/account", method = RequestMethod.DELETE)
     public Account deleteAccount(@RequestParam int accountId) {
         return null;
+    }
+
+    @RequestMapping(path = "/account/balance/{userId}", method = RequestMethod.GET)
+    public Account getBalance(@PathVariable int userId) {
+        return accountDao.getBalance(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -39,13 +39,13 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/account/4", method = RequestMethod.POST)
-    public Account sendMoney(@RequestParam int userId,  int senderAccountId, int recipientAccountId, double amount) {
+    public Account sendMoney(@RequestParam int userId, int senderAccountId, int recipientAccountId, double amount) {
         return null;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/account/5", method = RequestMethod.POST)
-    public Account retrieveDetails(@RequestParam int userId) {
+    public Account getTransferById(@RequestParam int userId) {
         return null;
     }
 }
