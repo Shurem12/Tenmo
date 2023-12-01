@@ -21,9 +21,10 @@ public class AccountController {
 
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/account/delete/{userId}/{accountId}", method = RequestMethod.DELETE)
-    public void deleteAccount(@PathVariable int userId,@PathVariable int accountId) {
-        accountDao.deleteAccount(userId,accountId);
+    @RequestMapping(path = "/account/delete", method = RequestMethod.DELETE)
+    public void deleteAccount(@RequestParam(value = "user_id") int userId,
+                              @RequestParam(value = "account_id") int accountId) {
+        accountDao.deleteAccount(userId, accountId);
     }
 
     @RequestMapping(path = "/account/balance/{userId}", method = RequestMethod.GET)
@@ -37,11 +38,13 @@ public class AccountController {
         return null;
     }
 
+    //
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping( method = RequestMethod.POST)
-    public void   sendMoney(@RequestParam  int senderAccountId, @RequestParam int recipientAccountId,@RequestParam double amount) {
-       accountDao.sendMoney(senderAccountId,recipientAccountId,amount);
-
+    @RequestMapping(path = "/send", method = RequestMethod.POST)
+    public void sendMoney(@RequestParam(value = "sender_account_id") int senderAccountId,
+                          @RequestParam(value = "recipient_account_id") int recipientAccountId,
+                          @RequestParam(value = "transfer_amount") double amount) {
+        accountDao.sendMoney(senderAccountId, recipientAccountId, amount);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
