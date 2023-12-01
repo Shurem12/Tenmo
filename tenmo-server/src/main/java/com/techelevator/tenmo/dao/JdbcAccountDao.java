@@ -34,6 +34,7 @@ public class JdbcAccountDao implements AccountDao {
 
     public Account createAccount(int userId) {
         //TODO: check if user exists before creating account
+        //ToDo prevent dublicates accounts
 
         Account newAccount = null;
         String sql = "insert into account(user_id,balance)\n" +

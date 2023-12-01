@@ -28,7 +28,7 @@ public class AccountController {
 
     @RequestMapping(path = "/account/balance/{userId}", method = RequestMethod.GET)
     public Account getBalance(@PathVariable int userId) {
-        return accountDao.getBalance(userId);
+        return accountDao.getBalanceById(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,9 +38,10 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/account/4", method = RequestMethod.POST)
-    public Account sendMoney(@RequestParam int userId, int senderAccountId, int recipientAccountId, double amount) {
-        return null;
+    @RequestMapping(path = "/account/", method = RequestMethod.POST)
+    public void   sendMoney(@RequestParam int userId, int senderAccountId, int recipientAccountId, double amount) {
+       accountDao.sendMoney(senderAccountId,recipientAccountId,amount);
+
     }
 
     @ResponseStatus(HttpStatus.CREATED)
