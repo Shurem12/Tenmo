@@ -20,7 +20,7 @@ public class AccountController {
     }
 
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/account/delete", method = RequestMethod.DELETE)
     public void deleteAccount(@RequestParam(value = "user_id") int userId,
                               @RequestParam(value = "account_id") int accountId) {

@@ -78,8 +78,8 @@ public class JdbcAccountDao implements AccountDao {
                 "set balance=(balance+?)\n" +
                 "where account_id=?;";
         try {
-            jdbcTemplate.update(sqlUpdateSenderAccount, senderAccountId, amount);
-            jdbcTemplate.update(sqlUpdateRecipientAccount, recipientAccountId, amount);
+            jdbcTemplate.update(sqlUpdateSenderAccount, amount, senderAccountId);
+            jdbcTemplate.update(sqlUpdateRecipientAccount, amount, recipientAccountId);
         } catch (Exception ex) {
             throw new DaoException("Could not send money");
         }
