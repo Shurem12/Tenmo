@@ -59,4 +59,17 @@ public class JdbcTransferDoa {
 
         return listOfTransfers;
     }
+
+    public Transfer mapTransferToRow(SqlRowSet result){
+        Transfer transfer = new Transfer();
+        transfer.setTransferId(result.get(""));
+        transfer.setSenderUserId(result.get(""));
+        transfer.setSenderAccountId(result.get(""));
+        transfer.setRecipientUserId(result.get(""));
+        transfer.setRecipientAccountId(result.get(""));
+        transfer.setTransferTimestamp(result.get(""));
+        transfer.setAmountSent(result.get(""));
+        transfer.setStatus(result.get(""));
+        return transfer;
+    }
 }
