@@ -16,8 +16,9 @@ public class JdbcAccountDao implements AccountDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Override
     public double getBalanceById(int accountId) {
-        double balance=0;
+        double balance = 0;
 
         String sql = "select*\n" +
                 "from account\n" +
@@ -27,7 +28,7 @@ public class JdbcAccountDao implements AccountDao {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, accountId);
             if (rowSet.next()) {
                 Account account = mapRowToAccount(rowSet);
-                balance= account.getBalance();
+                balance = account.getBalance();
             }
         } catch (Exception ex) {
             throw new DaoException("Could not retrieveDetails");
@@ -36,6 +37,7 @@ public class JdbcAccountDao implements AccountDao {
 
     }
 
+    @Override
     public Account createAccount(int userId) {
         //TODO: check if user exists before creating account
         //ToDo prevent dublicates accounts
@@ -56,7 +58,7 @@ public class JdbcAccountDao implements AccountDao {
         return newAccount;
     }
 
-
+    @Override
     public boolean deleteAccount(int userID, int accountId) {
         boolean successful = false;
         String sql = "delete \n" +
@@ -71,26 +73,27 @@ public class JdbcAccountDao implements AccountDao {
         return successful;
     }
 
-    public Account sendMoney(int senderAccountId, int recipientAccountId, double amount) {
+    @Override
+    public boolean sendMoney(int senderAccountId, int recipientAccountId, double amount) {
         // TODO: verify sender account has enough money
+        boolean status = false;
 
-//        TODO: add begin and commit to the sql command
-        String sqlUpdateSenderAccount = "update account\n" +
-                "set balance=(balance-?)\n" +
-                "where account_id=?;";
-        String sqlUpdateRecipientAccount = "update account\n" +
-                "set balance=(balance+?)\n" +
-                "where account_id=?;";
+        String sqlUpdateSenderAccount = "update account " +
+                "set balance = (balance - ?) " +
+                "where account_id = ?;";
+
+        String sqlUpdateRecipientAccount = "update account " +
+                "set balance = (balance + ?) " +
+                "where account_id = ?;";
+
         try {
             jdbcTemplate.update(sqlUpdateSenderAccount, amount, senderAccountId);
             jdbcTemplate.update(sqlUpdateRecipientAccount, amount, recipientAccountId);
+            status = true;
         } catch (Exception ex) {
             throw new DaoException("Could not send money");
         }
-        // get balance from sender
-        // if sender has enough money, send amount to recipient account
-
-        return null;
+        return status;
     }
 
 
