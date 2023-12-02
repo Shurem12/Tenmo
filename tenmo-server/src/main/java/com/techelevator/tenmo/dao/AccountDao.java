@@ -11,5 +11,5 @@ public interface AccountDao {
 
     boolean deleteAccount(int userID, int accountId);
 
-    Account sendMoney(int senderAccountId, int recipientAccountId, double amount);
+    boolean sendMoney(int senderAccountId, int recipientAccountId, double amount);
 }
