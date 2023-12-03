@@ -1,14 +1,19 @@
 package com.techelevator.tenmo.model;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Transfer {
     private int transferId;
-    private int senderUserId;
     private int senderAccountId;
-    private int recipientUserId;
     private int recipientAccountId;
-    private int transferTimestamp;
-    private int amountSent;
-    private String  status;
+    private Timestamp timestamp;
+    private double amount;
+    private String status;
+
+    public Transfer() {
+    }
 
     public int getTransferId() {
         return transferId;
@@ -16,14 +21,6 @@ public class Transfer {
 
     public void setTransferId(int transferId) {
         this.transferId = transferId;
-    }
-
-    public int getSenderUserId() {
-        return senderUserId;
-    }
-
-    public void setSenderUserId(int senderUserId) {
-        this.senderUserId = senderUserId;
     }
 
     public int getSenderAccountId() {
@@ -34,14 +31,6 @@ public class Transfer {
         this.senderAccountId = senderAccountId;
     }
 
-    public int getRecipientUserId() {
-        return recipientUserId;
-    }
-
-    public void setRecipientUserId(int recipientUserId) {
-        this.recipientUserId = recipientUserId;
-    }
-
     public int getRecipientAccountId() {
         return recipientAccountId;
     }
@@ -50,27 +39,41 @@ public class Transfer {
         this.recipientAccountId = recipientAccountId;
     }
 
-    public int getTransferTimestamp() {
-        return transferTimestamp;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setTransferTimestamp(int transferTimestamp) {
-        this.transferTimestamp = transferTimestamp;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public int getAmountSent() {
-        return amountSent;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setAmountSent(int amountSent) {
-        this.amountSent = amountSent;
+    public void setAmount(double amountSent) {
+        this.amount = amountSent;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "transfer_id=" + transferId +
+                "sender_account_id" + senderAccountId +
+                "recipient_account_id" + recipientAccountId +
+                "transfer_timestamp" + timestamp +
+                "amount" + amount +
+                "status" + status +
+                "}";
+    }
+
 }
+

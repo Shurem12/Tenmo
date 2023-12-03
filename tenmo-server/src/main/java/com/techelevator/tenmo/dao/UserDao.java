@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface UserDao {
 
-    List<User> findAll();
-
-    User findByUsername(String username);
-
-    int findIdByUsername(String username);
-
     boolean create(String username, String password);
+    boolean hasAccount(int userId);
+    User findByUsername(String username);
+    User findById(int userId);
+//    List<User> findAll();
+//
+//
+//    int findIdByUsername(String username);
+
 }

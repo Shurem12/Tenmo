@@ -32,5 +32,11 @@ public class Account {
         this.balance = balance;
     }
 
-
+    public String toString() {
+        return "Account{" +
+                "account_id" + accountId +
+                "user_id" + userId +
+                "balance" + balance +
+                "}";
+    }
 }

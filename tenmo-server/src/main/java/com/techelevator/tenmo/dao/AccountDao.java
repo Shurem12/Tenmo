@@ -5,11 +5,19 @@ import com.techelevator.tenmo.model.Account;
 import java.util.List;
 
 public interface AccountDao {
+    int create(int userId);
+
+    Account findById(int accountId);
+
     double getBalanceById(int accountId);
 
-    Account createAccount(int userId);
+    void deposit(Account account, double amount);
+    void withdraw(Account account, double amount);
 
-    boolean deleteAccount(int userID, int accountId);
+//    void delete(int userId);
+//    Account findByUserId(int userId);
 
-    boolean sendMoney(int senderAccountId, int recipientAccountId, double amount);
+//    boolean delete(int userID, int accountId);
+
+//    boolean sendMoney(int senderAccountId, int recipientAccountId, double amount);
 }
