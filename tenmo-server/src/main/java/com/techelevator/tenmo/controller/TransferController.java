@@ -87,4 +87,9 @@ public class TransferController implements BaseController {
         Account receiver = accountDao.findByUsername(username);
         return transferDao.send(sender, receiver, amount);
     }
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public List<Transfer> findAllByAccountId(@RequestParam(value = "account_id") int accountId){
+        return transferDao.findAllByAccountId(accountId);
+    }
 }

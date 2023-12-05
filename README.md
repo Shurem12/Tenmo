@@ -18,7 +18,7 @@ You should attempt to complete all of the following required use cases.
 ~~3. As a user, when I register a new account is created for me.~~
    ~~1. The new account has an initial balance of $1000.~~
 ~~4. As an authenticated user of the system, I need to be able to see my Account Balance.~~
-5. As an authenticated user of the system, I need to be able to *send* a transfer of a specific amount of TE Bucks to a registered user.
+~~5. As an authenticated user of the system, I need to be able to *send* a transfer of a specific amount of TE Bucks to a registered user.~~
    1. I should be able to choose from a list of users to send TE Bucks to.
    2. I must not be allowed to send money to myself.
    3. A transfer includes the User IDs of the from and to users and the amount of TE Bucks.
@@ -27,7 +27,7 @@ You should attempt to complete all of the following required use cases.
    6. I can't send more TE Bucks than I have in my account.
    7. I can't send a zero or negative amount.
    8. A Sending Transfer has an initial status of *Approved*.
-6. As an authenticated user of the system, I need to be able to see transfers I have sent or received.
+~~6. As an authenticated user of the system, I need to be able to see transfers I have sent or received.~~
 ~~7. As an authenticated user of the system, I need to be able to retrieve the details of any transfer based upon the transfer ID.~~
 
 Validate all of the API's endpoints using Postman and/or Swagger

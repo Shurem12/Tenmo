@@ -59,9 +59,9 @@ public class JdbcTransferDoa implements TransferDao {
     public Transfer update(String sql, Transfer transfer) {
         Transfer updatedTransfer = null;
         try {
-            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, transfer.getTransferId());
-            if (result.next())
-                updatedTransfer = mapTransferToRow(result);
+            int transferId = transfer.getTransferId();
+            jdbcTemplate.update(sql, transferId);
+            updatedTransfer = findByTransferId(transferId);
         } catch (Exception e) {
             String message = "Transfer was not completed";
             throw new DaoException(message);
@@ -94,26 +94,21 @@ public class JdbcTransferDoa implements TransferDao {
         return findByTransferId(transfer.getTransferId());
     }
 
+    public List<Transfer> findAllByAccountId(int accountId) {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT * FROM transfer WHERE sender_account_id = ? or receiver_account_id = ?;";
 
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, accountId, accountId);
+            while (result.next())
+                transfers.add(mapTransferToRow(result));
+        } catch (Exception e) {
+            String message = "Transfers not found";
+            throw new DaoException(message);
+        }
 
-
-//    public List<Transfer> findAllByUserId(int userId) {}
-
-//    public List<Transfer> findAllByUserId(int userId) {
-//        List<Transfer> transfers = new ArrayList<>();
-//        String sql = "SELECT * FROM transfer WHERE user_id = ?;";
-//
-//        try {
-//            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
-//            while (result.next())
-//                 transfers.add(mapTransferToRow(result));
-//        } catch (Exception e) {
-//            String message = "Transfers not found";
-//            throw new DaoException(message);
-//        }
-//
-//        return transfers;
-//    }
+        return transfers;
+    }
 
     public Transfer mapTransferToRow(SqlRowSet result) {
         Transfer transfer = new Transfer();
