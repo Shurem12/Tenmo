@@ -87,6 +87,7 @@ public class JdbcTransferDoa implements TransferDao {
     public Transfer send(Account sender, Account receiver, double amount) {
         Transfer transfer = init(sender, receiver, amount);
         approve(transfer);
+
         if (sender.getBalance() >= amount) {
             accountDao.withdraw(sender, amount);
             accountDao.deposit(receiver, amount);
@@ -103,7 +104,37 @@ public class JdbcTransferDoa implements TransferDao {
             while (result.next())
                 transfers.add(mapTransferToRow(result));
         } catch (Exception e) {
-            String message = "Transfers not found";
+            String message = String.format("Transfers not found for sender_account_id(%s) or receiver_account_id(%s)", accountId);
+            throw new DaoException(message);
+        }
+
+        return transfers;
+    }
+    public List<Transfer> findBySenderAccountId(int accountId) {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT * FROM transfer WHERE sender_account_id = ?;";
+
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, accountId);
+            while (result.next())
+                transfers.add(mapTransferToRow(result));
+        } catch (Exception e) {
+            String message = String.format("Transfers not found for sender_account_id(%s)", accountId);
+            throw new DaoException(message);
+        }
+
+        return transfers;
+    }
+    public List<Transfer> findByReceiverAccountId(int accountId) {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT * FROM transfer WHERE receiver_account_id = ?;";
+
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, accountId);
+            while (result.next())
+                transfers.add(mapTransferToRow(result));
+        } catch (Exception e) {
+            String message = String.format("Transfers not found for receiver_account_id(%s)", accountId);
             throw new DaoException(message);
         }
 

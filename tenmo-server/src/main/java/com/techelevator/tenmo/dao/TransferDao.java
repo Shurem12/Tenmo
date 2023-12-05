@@ -22,8 +22,6 @@ public interface TransferDao {
     Transfer cancel(Transfer transfer);
 
     List<Transfer> findAllByAccountId(int accountId);
-
-//    List<Transfer> listByAccountId(int accountId);
-//    List<Transfer> listBySenderAccountId(int senderAccountId);
-//    List<Transfer> listByRecipientAccountId(int recipientAccountId);
+    List<Transfer> findBySenderAccountId(int accountId);
+    List<Transfer> findByReceiverAccountId(int accountId);
 }
