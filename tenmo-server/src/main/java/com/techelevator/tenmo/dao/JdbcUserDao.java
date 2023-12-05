@@ -37,7 +37,7 @@ public class JdbcUserDao implements UserDao {
 
 //        Creates a new account with initial balance of $1000 when a new user is registered
         int accountId = accountDao.create(newUserId);
-        accountDao.findById(accountId).setBalance(1000.00);
+        accountDao.findByAccountId(accountId).setBalance(1000.00);
 
         return true;
     }
@@ -98,28 +98,17 @@ public class JdbcUserDao implements UserDao {
         return user;
     }
 
-//    @Override
-//    public int findIdByUsername(String username) {
-//        String sql = "SELECT user_id FROM tenmo_user WHERE username ILIKE ?;";
-//        Integer userId = jdbcTemplate.queryForObject(sql, Integer.class, username);
-//
-//        if (userId != null)
-//            return userId;
-//
-//        return -1;
-//    }
-//
-//    @Override
-//    public List<User> findAll() {
-//        List<User> users = new ArrayList<>();
-//        String sql = "SELECT user_id, username, password_hash FROM tenmo_user;";
-//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-//        while (results.next()) {
-//            User user = mapRowToUser(results);
-//            users.add(user);
-//        }
-//        return users;
-//    }
+    @Override
+    public List<User> findAll() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT user_id, username, password_hash FROM tenmo_user;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            User user = mapRowToUser(results);
+            users.add(user);
+        }
+        return users;
+    }
 
 
     private User mapRowToUser(SqlRowSet result) {

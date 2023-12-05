@@ -2,18 +2,16 @@ package com.techelevator.tenmo.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Transfer {
     private int transferId;
     private int senderAccountId;
-    private int recipientAccountId;
+    private int receiverAccountId;
     private Timestamp timestamp;
     private double amount;
-    private String status;
-
-    public Transfer() {
-    }
+    private TransferStatus status;
 
     public int getTransferId() {
         return transferId;
@@ -31,12 +29,12 @@ public class Transfer {
         this.senderAccountId = senderAccountId;
     }
 
-    public int getRecipientAccountId() {
-        return recipientAccountId;
+    public int getReceiverAccountId() {
+        return receiverAccountId;
     }
 
-    public void setRecipientAccountId(int recipientAccountId) {
-        this.recipientAccountId = recipientAccountId;
+    public void setReceiverAccountId(int recipientAccountId) {
+        this.receiverAccountId = recipientAccountId;
     }
 
     public Timestamp getTimestamp() {
@@ -55,11 +53,11 @@ public class Transfer {
         this.amount = amountSent;
     }
 
-    public String getStatus() {
+    public TransferStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TransferStatus status) {
         this.status = status;
     }
 
@@ -68,7 +66,7 @@ public class Transfer {
         return "Transfer{" +
                 "transfer_id=" + transferId +
                 "sender_account_id" + senderAccountId +
-                "recipient_account_id" + recipientAccountId +
+                "receiver_account_id" + receiverAccountId +
                 "transfer_timestamp" + timestamp +
                 "amount" + amount +
                 "status" + status +

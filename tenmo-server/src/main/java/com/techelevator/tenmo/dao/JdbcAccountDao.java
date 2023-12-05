@@ -30,7 +30,7 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
-    public Account findById(int accountId) {
+    public Account findByAccountId(int accountId) {
         String sql = "select * from account where account_id = ?;";
 
         Account account = null;
@@ -39,7 +39,39 @@ public class JdbcAccountDao implements AccountDao {
             if (result.next())
                 account = mapRowToAccount(result);
         } catch (Exception e) {
-            throw new DaoException("Account was not found");
+            String message = String.format("Account was not found for account_id(%s)", accountId);
+            throw new DaoException(message);
+        }
+        return account;
+    }
+
+    @Override
+    public Account findByUserId(int userId) {
+        String sql = "select * from account where user_id = ?;";
+
+        Account account = null;
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
+            if (result.next())
+                account = mapRowToAccount(result);
+        } catch (Exception e) {
+            String message = String.format("Account was not found for user_id(%s)", userId);
+            throw new DaoException(message);
+        }
+        return account;
+    }
+    @Override
+    public Account findByUsername(String username){
+        String sql = "select * from account join tenmo_user on account.user_id = tenmo_user.user_id where username = ?;";
+
+        Account account = null;
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, username);
+            if (result.next())
+                account = mapRowToAccount(result);
+        } catch (Exception e) {
+            String message = String.format("Account was not found for username(%s)", username);
+            throw new DaoException(message);
         }
         return account;
     }
@@ -73,7 +105,9 @@ public class JdbcAccountDao implements AccountDao {
         String sql = "update account set balance = (balance - ?) where account_id = ?;";
 
         try {
-            jdbcTemplate.update(sql, amount, account.getAccountId());
+            if (amount > 0 && account.getBalance() > 0 && account.getBalance() >= amount) {
+                jdbcTemplate.update(sql, amount, account.getAccountId());
+            }
         } catch (Exception e) {
             String message = String.format("Failed to deposit amount(%s) to account_id(%s)", amount, account.getAccountId());
             throw new DaoException(message);
@@ -87,72 +121,4 @@ public class JdbcAccountDao implements AccountDao {
         account.setBalance(result.getDouble("balance"));
         return account;
     }
-
-//    @Override
-//    public void delete(int userId) {
-//        String sql = "delete \n" +
-//                "from account\n" +
-//                "where user_id=?;";
-//        try {
-//            jdbcTemplate.update(sql, userId);
-//        } catch (Exception ex) {
-//            throw new DaoException("Account was not deleted");
-//        }
-//    }
-
-//    @Override
-//    public boolean hasAccount(int userId){
-//        String sql = "select * from account where user_id = ?";
-//
-//        try {
-//            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
-//            if (result.next()) {
-//                return true;
-//            }
-//        } catch (Exception e) {
-//            throw new DaoException("Account was not found");
-//        }
-//        return false;
-//    }
-
-//    @Override
-//    public Account findByUserId(int userId) {
-//        Account account = null;
-//        String sql = "select * from account where user_id = ?";
-//
-//        try {
-//            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
-//            if (result.next()) {
-//                account = mapRowToAccount(result);
-//            }
-//        } catch (Exception e) {
-//            throw new DaoException("Account was not found");
-//        }
-//        return account;
-//    }
-
-
-//    @Override
-//    public boolean sendMoney(int senderAccountId, int recipientAccountId, double amount) {
-//        // TODO: verify sender account has enough money
-//        boolean status = false;
-//
-//        String sqlUpdateSenderAccount = "update account " +
-//                "set balance = (balance - ?) " +
-//                "where account_id = ?;";
-//
-//        String sqlUpdateRecipientAccount = "update account " +
-//                "set balance = (balance + ?) " +
-//                "where account_id = ?;";
-//
-//        try {
-//            jdbcTemplate.update(sqlUpdateSenderAccount, amount, senderAccountId);
-//            jdbcTemplate.update(sqlUpdateRecipientAccount, amount, recipientAccountId);
-//            status = true;
-//        } catch (Exception ex) {
-//            throw new DaoException("Could not send money");
-//        }
-//        return status;
-//    }
-
 }

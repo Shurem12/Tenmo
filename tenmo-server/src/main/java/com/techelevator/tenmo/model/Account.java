@@ -33,10 +33,6 @@ public class Account {
     }
 
     public String toString() {
-        return "Account{" +
-                "account_id" + accountId +
-                "user_id" + userId +
-                "balance" + balance +
-                "}";
+        return String.format("Account{ account_id=%s, user_id=%s, balance=%s }", accountId, userId, balance);
     }
 }

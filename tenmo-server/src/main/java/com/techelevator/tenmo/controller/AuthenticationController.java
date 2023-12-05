@@ -2,6 +2,7 @@ package com.techelevator.tenmo.controller;
 
 import javax.validation.Valid;
 
+import com.techelevator.tenmo.exception.DaoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +20,8 @@ import com.techelevator.tenmo.model.RegisterUserDTO;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 /**
  * Controller to authenticate users.
@@ -45,7 +48,7 @@ public class AuthenticationController {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, false);
-        
+
         User user = userDao.findByUsername(loginDto.getUsername());
 
         return new LoginResponse(jwt, user);
@@ -57,6 +60,20 @@ public class AuthenticationController {
         if (!userDao.create(newUser.getUsername(), newUser.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User registration failed.");
         }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "/user_list", method = RequestMethod.GET)
+    public String findAll() {
+        String stringOfUsers = "";
+        List<User> users = userDao.findAll();
+        for (int i=0; i < users.size(); i++){
+            stringOfUsers += users.get(i);
+
+            if (users.get(i+1) != null)
+                stringOfUsers += ", ";
+        }
+        return stringOfUsers;
     }
 
     /**
@@ -80,13 +97,13 @@ public class AuthenticationController {
             this.token = token;
         }
 
-		public User getUser() {
-			return user;
-		}
+        public User getUser() {
+            return user;
+        }
 
-		public void setUser(User user) {
-			this.user = user;
-		}
+        public void setUser(User user) {
+            this.user = user;
+        }
     }
 }
 

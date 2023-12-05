@@ -28,7 +28,7 @@ You should attempt to complete all of the following required use cases.
    7. I can't send a zero or negative amount.
    8. A Sending Transfer has an initial status of *Approved*.
 6. As an authenticated user of the system, I need to be able to see transfers I have sent or received.
-7. As an authenticated user of the system, I need to be able to retrieve the details of any transfer based upon the transfer ID.
+~~7. As an authenticated user of the system, I need to be able to retrieve the details of any transfer based upon the transfer ID.~~
 
 Validate all of the API's endpoints using Postman and/or Swagger
 

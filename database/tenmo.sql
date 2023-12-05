@@ -42,16 +42,14 @@ CREATE SEQUENCE seq_transfer_id
 create type transfer_status as enum ('CANCELLED','PENDING','APPROVED','REJECTED');
 create table transfer(
         transfer_id int not null default nextval('seq_transfer_id') primary key,
+        transfer_timestamp timestamp(0) not null default current_timestamp,
         sender_account_id int not null,
-        recipient_account_id int not null,
+        receiver_account_id int not null,
         amount decimal(13, 2) not null,
         status transfer_status not null default 'PENDING',
-        transfer_timestamp timestamp not null default current_timestamp,
---        transfer_date date not null default current_date,
---        transfer_time time not null default current_time,
         foreign key (sender_account_id) references account(account_id),
-        foreign key (recipient_account_id) references account(account_id),
-        unique (transfer_id, sender_account_id, recipient_account_id)
+        foreign key (receiver_account_id) references account(account_id),
+        unique (transfer_id, sender_account_id, receiver_account_id)
 );
 
 COMMIT;
