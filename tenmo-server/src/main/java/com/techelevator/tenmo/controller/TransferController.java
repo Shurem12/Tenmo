@@ -6,6 +6,7 @@ import com.techelevator.tenmo.dao.UserDao;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.TransferStatus;
+import com.techelevator.tenmo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -88,8 +89,15 @@ public class TransferController implements BaseController {
         return transferDao.send(sender, receiver, amount);
     }
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    @RequestMapping(path = "/find_account", method = RequestMethod.GET)
     public List<Transfer> findAllByAccountId(@RequestParam(value = "account_id") int accountId){
         return transferDao.findAllByAccountId(accountId);
     }
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
+    public List<User> findAllUsers(){
+        return userDao.findAll();
+    }
+
+
 }
