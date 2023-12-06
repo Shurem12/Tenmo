@@ -58,7 +58,6 @@ public class TransferController implements BaseController {
     @RequestMapping(path = "/approve", method = RequestMethod.PUT)
     public Transfer approve(@RequestBody Transfer transfer) {
         return transferDao.approve(transfer);
-//        return transfer;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -105,9 +104,7 @@ public class TransferController implements BaseController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
-    public List<User> findAllUsers(){
+    public List<String> findAllUsers(){
         return userDao.findAll();
     }
-
-
 }

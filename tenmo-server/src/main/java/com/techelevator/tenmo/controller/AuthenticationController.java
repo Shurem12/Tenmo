@@ -62,19 +62,19 @@ public class AuthenticationController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/user_list", method = RequestMethod.GET)
-    public String findAll() {
-        String stringOfUsers = "";
-        List<User> users = userDao.findAll();
-        for (int i=0; i < users.size(); i++){
-            stringOfUsers += users.get(i);
-
-            if (users.get(i+1) != null)
-                stringOfUsers += ", ";
-        }
-        return stringOfUsers;
-    }
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @RequestMapping(value = "/user_list", method = RequestMethod.GET)
+//    public String findAll() {
+//        String stringOfUsers = "";
+//        List<User> users = userDao.findAll();
+//        for (int i=0; i < users.size(); i++){
+//            stringOfUsers += users.get(i);
+//
+//            if (users.get(i+1) != null)
+//                stringOfUsers += ", ";
+//        }
+//        return stringOfUsers;
+//    }
 
     /**
      * Object to return as body in JWT Authentication.
