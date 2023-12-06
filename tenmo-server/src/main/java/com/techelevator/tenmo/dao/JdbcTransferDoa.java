@@ -88,7 +88,7 @@ public class JdbcTransferDoa implements TransferDao {
         Transfer transfer = init(sender, receiver, amount);
         approve(transfer);
 
-        if (sender.getBalance() >= amount) {
+        if (sender.getBalance() >= amount && transfer.getStatus() == TransferStatus.APPROVED) {
             accountDao.withdraw(sender, amount);
             accountDao.deposit(receiver, amount);
         }
