@@ -17,7 +17,7 @@ public interface BaseController {
     @RequestMapping(path = "", method = RequestMethod.GET)
     public Account currentAccount();
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
-    public List<String> findAllUsers();
+//    @ResponseStatus(HttpStatus.OK)
+//    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
+//    public List<String> findAllUsers();
 }

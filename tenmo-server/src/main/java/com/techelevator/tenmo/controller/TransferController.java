@@ -31,8 +31,8 @@ public class TransferController implements BaseController {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/find_users", method = RequestMethod.GET)
     public List<String> findAllUsers() {
         List<String> listOfUsers = userDao.findAll();
         listOfUsers.remove(whoami());

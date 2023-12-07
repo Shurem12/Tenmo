@@ -28,11 +28,11 @@ public class AccountController implements BaseController {
 
     //    @ResponseStatus(HttpStatus.CREATED)
 //    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
-    public List<String> findAllUsers() {
-        List<String> listOfUsers = userDao.findAll();
-        listOfUsers.remove(whoami());
-        return listOfUsers;
-    }
+//    public List<String> findAllUsers() {
+//        List<String> listOfUsers = userDao.findAll();
+//        listOfUsers.remove(whoami());
+//        return listOfUsers;
+//    }
 
     @Override
     public Account currentAccount() {
