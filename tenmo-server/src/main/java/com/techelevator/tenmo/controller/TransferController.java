@@ -107,7 +107,7 @@ public class TransferController implements BaseController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/find_all", method = RequestMethod.GET)
+    @RequestMapping(path = "/find_transfer", method = RequestMethod.GET)
     public List<Transfer> findAllByAccountId(@RequestParam(value = "account_id") int accountId) {
         return transferDao.findAllByAccountId(accountId);
     }

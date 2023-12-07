@@ -14,7 +14,7 @@ public interface BaseController {
     public String whoami();
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "/info", method = RequestMethod.GET)
     public Account currentAccount();
 
 //    @ResponseStatus(HttpStatus.OK)
