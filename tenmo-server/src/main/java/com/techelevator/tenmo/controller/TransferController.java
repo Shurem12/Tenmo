@@ -31,6 +31,14 @@ public class TransferController implements BaseController {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
+    public List<String> findAllUsers() {
+        List<String> listOfUsers = userDao.findAll();
+        listOfUsers.remove(whoami());
+        return listOfUsers;
+    }
+
     @Override
     public Account currentAccount() {
         String username = whoami();
@@ -87,6 +95,7 @@ public class TransferController implements BaseController {
         Account receiver = accountDao.findByUsername(username);
         return transferDao.send(sender, receiver, amount);
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/request", method = RequestMethod.POST)
     public Transfer request(
@@ -96,24 +105,23 @@ public class TransferController implements BaseController {
         Account receiver = currentAccount();
         return transferDao.init(sender, receiver, amount);
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/find_all", method = RequestMethod.GET)
-    public List<Transfer> findAllByAccountId(@RequestParam(value = "account_id") int accountId){
+    public List<Transfer> findAllByAccountId(@RequestParam(value = "account_id") int accountId) {
         return transferDao.findAllByAccountId(accountId);
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/find_by_sender", method = RequestMethod.GET)
-    public List<Transfer> findBySenderAccountId(@RequestParam(value = "sender_account_id") int accountId){
+    public List<Transfer> findBySenderAccountId(@RequestParam(value = "sender_account_id") int accountId) {
         return transferDao.findBySenderAccountId(accountId);
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/find_by_receiver", method = RequestMethod.GET)
-    public List<Transfer> findByReceiverAccountId(@RequestParam(value = "receiver_account_id") int accountId){
+    public List<Transfer> findByReceiverAccountId(@RequestParam(value = "receiver_account_id") int accountId) {
         return transferDao.findByReceiverAccountId(accountId);
     }
-    @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
-    public List<String> findAllUsers(){
-        return userDao.findAll();
-    }
+
 }

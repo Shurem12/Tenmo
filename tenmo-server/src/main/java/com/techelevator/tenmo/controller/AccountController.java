@@ -9,6 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/account")
 @PreAuthorize("isAuthenticated()")
@@ -22,6 +24,14 @@ public class AccountController implements BaseController {
     @Override
     public String whoami() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    //    @ResponseStatus(HttpStatus.CREATED)
+//    @RequestMapping(path = "/find_all_users", method = RequestMethod.GET)
+    public List<String> findAllUsers() {
+        List<String> listOfUsers = userDao.findAll();
+        listOfUsers.remove(whoami());
+        return listOfUsers;
     }
 
     @Override
